@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, SafeAreaView } from 'react-native';
 
@@ -25,6 +25,14 @@ export default function App() {
 
     setInput('');
   }
+
+   // const letrasNome = nome.length;
+
+  const letrasNome = useMemo(()=> {
+    console.log('Pegando quantidade de letras!')
+    return nome.length;
+  }, [nome]);
+
   return (
   
     <View style={styles.container}>
@@ -44,6 +52,8 @@ export default function App() {
       <StatusBar style="auto" />
 
       <Text style={styles.nome}>{nome}</Text>
+
+      <Text style={styles.nome}>Possui: {letrasNome} letras</Text>
     </View>
   );
 }
