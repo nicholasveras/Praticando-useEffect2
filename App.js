@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo} from 'react';
+import React, {useState, useEffect, useMemo, useRef} from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, TextInput, View, TouchableOpacity, SafeAreaView } from 'react-native';
 
@@ -7,6 +7,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function App() {
   const [input, setInput] = useState('');
   const [nome, setNome] = useState('');
+
+  const inputRef = useRef(null);
 
   useEffect(() =>{
     async function loadData(){
@@ -33,15 +35,25 @@ export default function App() {
     return nome.length;
   }, [nome]);
 
+
+    function chamarInput(){
+      //inputRef.current.focus();
+       inputRef.current.clear(); //Limpa tudo
+
+      console.log(inputRef.current.isFocused())
+    }
+
   return (
   
     <View style={styles.container}>
+
       <SafeAreaView>
       <View style={styles.viewInput}>
         <TextInput
         style={styles.input}
         value={input}
         onChangeText={(texto) => setInput(texto)}
+        ref={inputRef}
         />
 
         <TouchableOpacity onPress={gravaNome}>
@@ -54,6 +66,11 @@ export default function App() {
       <Text style={styles.nome}>{nome}</Text>
 
       <Text style={styles.nome}>Possui: {letrasNome} letras</Text>
+
+      <TouchableOpacity onPress={chamarInput}>
+        <Text>Chamar Input</Text>
+      </TouchableOpacity>
+
     </View>
   );
 }
